@@ -5,11 +5,11 @@ import {
   FETCH_USERS_FAILURE
 } from './userTypes'
 
-export const fetchUsers = (filters) => {
+export const fetchUsers = (filters, page) => {
   return (dispatch) => {
     dispatch(fetchUsersRequest())
     axios
-      .get(`https://api.stackexchange.com/2.2/questions?order=desc&pagesize=20&sort=activity&site=`+ `${filters}`) 
+      .get(`https://api.stackexchange.com/2.2/questions?page=`+`${page}`+`&order=desc&pagesize=20&sort=activity&site=`+`${filters}` ) 
       .then(response => {
         // response.data is the users
         const items = response.data.items

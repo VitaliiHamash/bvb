@@ -1,6 +1,26 @@
 .Background{
+  display: flex;
+  flex-direction: column;
   background-color: rgb(233, 233, 233);
   min-height: 80vmin;
+  padding: 5px;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+ul {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  align-items: flex-start;
+  
+}
+
+ul>li{
+  padding: 3px;
+  font-size: 17px;
 }
 
 

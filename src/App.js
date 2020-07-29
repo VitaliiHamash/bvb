@@ -6,18 +6,31 @@ import './App.css';
 import { Input } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { fetchUsers } from './actions/user';
-
+import Button from '@material-ui/core/Button';
 
 class App extends React.Component {
-  
-  
-  componentDidMount(){
-  
-    this.props.fetchUsers('stackoverflow')
-    
+
+
+  constructor(props){
+    super(props)
+    this.state = {
+      //filters : this.props.food.name, // We can add from this.props.food after APPLY button on filter.js
+      
+      page : 1,
+      refreshing : false,
+      
+    }
   }
   
   
+  componentDidMount(){
+    this.props.fetchUsers('stackoverflow', '1')
+    
+  }
+  
+  updatePages(){
+    this.props.fetchUsers('stackoverflow', '2')
+  }
    
   
   render() {
@@ -43,12 +56,15 @@ class App extends React.Component {
               </a>
           </header>
           <div className="Background">
-              <h2>Users List</h2>
-              <ul>
+              <h2>Questions List</h2>
+              <ul className="List">
                 {this.props.list &&
                   this.props.list.items &&
-                  this.props.list.items.map(item => <li>{item.title}</li>)}
+                  this.props.list.items.map(item => <li ><a href={item.link}>{item.title}</a></li>)}
               </ul>
+              <Button variant="contained" color="secondary" href="#contained-buttons">
+                 Load More
+              </Button>
           </div>
           </div>
           )
@@ -71,7 +87,7 @@ const  mapStateToProps = (state) => {
   
   const mapDispatchToProps = (dispatch) => {
     return {
-        fetchUsers:(filters)=> dispatch(fetchUsers(filters))
+        fetchUsers:(filters, page) => dispatch(fetchUsers(filters,page))
     }
   }
 
