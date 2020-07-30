@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   background-color: rgb(233, 233, 233);
-  min-height: 80vmin;
+  min-height: 85vmin;
   padding: 5px;
   justify-content: center;
   align-items: center;
@@ -40,9 +40,18 @@ ul>li{
   }
 }*/
 
+.footer{
+  
+  min-height: 4vh;
+  background-color: #352b29;
+  
+  
+}
+
+
 .App-header {
   background-color:white;
-  min-height: 12vh;
+  min-height: 10vh;
   display: flex;
   flex-direction: row;
   align-items: center;

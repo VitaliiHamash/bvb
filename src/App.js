@@ -1,6 +1,7 @@
 import React  from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Modal from './Modal';
 
 
 import { Input} from '@material-ui/core';
@@ -15,7 +16,7 @@ class App extends React.Component {
     super(props)
     this.state = {
       //filters : this.props.food.name, // We can add from this.props.food after APPLY button on filter.js
-      page : 1,
+      page : 2,
       search: '',
 
       
@@ -46,15 +47,11 @@ class App extends React.Component {
     console.log(this.state)
     let filtered = this.props.list.items.filter(item => {
       let i = 0
-
-
       for (i; i <= item.tags.length; i++) {
          return item.tags[i].toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
       }
-
-
       
-    })
+})
     setTimeout(() => {
       console.log(filtered)
     }, 2000)
@@ -69,14 +66,7 @@ class App extends React.Component {
 
               <img src={logo} className="App-logo" alt="logo" />
               <Input placeholder="search tags" value={this.state.search} onChange={this.updateSearch.bind(this)}></Input>
-              <a
-                className="App-link"
-                href="https://reactjs.org"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                filter
-              </a>
+              <Modal />
           </header>
           <div className="Background">
               <h2>Questions List</h2>
@@ -89,6 +79,7 @@ class App extends React.Component {
                  Load More
               </Button>
           </div>
+          <footer class="footer"></footer>
           </div>
           )
           
