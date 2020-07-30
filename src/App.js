@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 
 
-import { Input } from '@material-ui/core';
+import { Input, Fab } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { fetchUsers } from './actions/user';
 import Button from '@material-ui/core/Button';
@@ -16,12 +16,17 @@ class App extends React.Component {
     this.state = {
       //filters : this.props.food.name, // We can add from this.props.food after APPLY button on filter.js
       page : 2,
-      refreshing : false,
+      search: '',
+
       
     }
     this.updatePages = this.updatePages.bind(this)
   }
   
+
+  updateSearch(event) {
+    this.setState({search:event.target.value.substr(0,20)});
+  }
   
   componentDidMount(){
     this.props.fetchUsers('stackoverflow', '1')
@@ -39,6 +44,13 @@ class App extends React.Component {
   render() {
     console.log(this.props)
     console.log(this.state)
+    let filtered = this.props.list.items.filter(item => {
+      return item.title.indexOf(this.state.search) !== -1
+    })
+    setTimeout(() => {
+      console.log(filtered)
+    }, 2000)
+    
     return this.props.list.loading ? (
             <h2>Loading</h2>
           ) : this.props.list.error ? (
@@ -60,10 +72,14 @@ class App extends React.Component {
           </header>
           <div className="Background">
               <h2>Questions List</h2>
+              <input type="text"
+                value={this.state.search}
+                onChange={this.updateSearch.bind(this)}
+              />
               <ul className="List">
                 {this.props.list &&
                   this.props.list.items &&
-                  this.props.list.items.map(item => <li ><a href={item.link}>{item.title}</a></li>)}
+                  filtered.map(item => <li><a href={item.link}>{item.title}</a></li>)}
               </ul>
               <Button onClick={this.updatePages} variant="contained" color="secondary" href="#contained-buttons">
                  Load More
