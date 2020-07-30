@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 
 
-import { Input, Fab } from '@material-ui/core';
+import { Input} from '@material-ui/core';
 import { connect } from 'react-redux';
 import { fetchUsers } from './actions/user';
 import Button from '@material-ui/core/Button';
@@ -15,7 +15,7 @@ class App extends React.Component {
     super(props)
     this.state = {
       //filters : this.props.food.name, // We can add from this.props.food after APPLY button on filter.js
-      page : 2,
+      page : 1,
       search: '',
 
       
@@ -45,7 +45,15 @@ class App extends React.Component {
     console.log(this.props)
     console.log(this.state)
     let filtered = this.props.list.items.filter(item => {
-      return item.title.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
+      let i = 0
+
+
+      for (i; i <= item.tags.length; i++) {
+         return item.tags[i].toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
+      }
+
+
+      
     })
     setTimeout(() => {
       console.log(filtered)
@@ -60,7 +68,7 @@ class App extends React.Component {
             <header className="App-header">
 
               <img src={logo} className="App-logo" alt="logo" />
-              <Input placeholder="search tags"></Input>
+              <Input placeholder="search tags" value={this.state.search} onChange={this.updateSearch.bind(this)}></Input>
               <a
                 className="App-link"
                 href="https://reactjs.org"
@@ -72,10 +80,6 @@ class App extends React.Component {
           </header>
           <div className="Background">
               <h2>Questions List</h2>
-              <input type="text"
-                value={this.state.search}
-                onChange={this.updateSearch.bind(this)}
-              />
               <ul className="List">
                 {this.props.list &&
                   this.props.list.items &&
