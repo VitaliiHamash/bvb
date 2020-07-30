@@ -45,7 +45,7 @@ class App extends React.Component {
     console.log(this.props)
     console.log(this.state)
     let filtered = this.props.list.items.filter(item => {
-      return item.title.indexOf(this.state.search) !== -1
+      return item.title.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
     })
     setTimeout(() => {
       console.log(filtered)
