@@ -5,7 +5,7 @@ import {
   FETCH_USERS_FAILURE
 } from './userTypes'
 
-export const fetchUsers = (filters, page) => {
+export const fetchUsers = (filters, page='0') => {
   return (dispatch) => {
     dispatch(fetchUsersRequest())
     axios

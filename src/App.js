@@ -15,27 +15,30 @@ class App extends React.Component {
     super(props)
     this.state = {
       //filters : this.props.food.name, // We can add from this.props.food after APPLY button on filter.js
-      
-      page : 1,
+      page : 2,
       refreshing : false,
       
     }
+    this.updatePages = this.updatePages.bind(this)
   }
   
   
   componentDidMount(){
     this.props.fetchUsers('stackoverflow', '1')
-    
+  
   }
   
   updatePages(){
-    this.props.fetchUsers('stackoverflow', '2')
+   this.setState({
+      page : this.state.page + 1
+    })
+    this.props.fetchUsers('stackoverflow', this.state.page)
   }
    
   
   render() {
     console.log(this.props)
-    
+    console.log(this.state)
     return this.props.list.loading ? (
             <h2>Loading</h2>
           ) : this.props.list.error ? (
@@ -62,7 +65,7 @@ class App extends React.Component {
                   this.props.list.items &&
                   this.props.list.items.map(item => <li ><a href={item.link}>{item.title}</a></li>)}
               </ul>
-              <Button variant="contained" color="secondary" href="#contained-buttons">
+              <Button onClick={this.updatePages} variant="contained" color="secondary" href="#contained-buttons">
                  Load More
               </Button>
           </div>
