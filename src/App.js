@@ -2,7 +2,7 @@ import React  from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Modal from './Modal';
-
+import Loader from 'react-loader-spinner'
 
 import { Input} from '@material-ui/core';
 import { connect } from 'react-redux';
@@ -15,11 +15,10 @@ class App extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      //filters : this.props.food.name, // We can add from this.props.food after APPLY button on filter.js
+    
       page : 2,
       search: '',
-
-      
+      filtered: '&order=desc&sort=activity' //default values
     }
     this.updatePages = this.updatePages.bind(this)
   }
@@ -30,7 +29,7 @@ class App extends React.Component {
   }
   
   componentDidMount(){
-    this.props.fetchUsers('stackoverflow', '1')
+    this.props.fetchUsers(this.state.filtered, '1')
   
   }
   
@@ -38,7 +37,7 @@ class App extends React.Component {
    this.setState({
       page : this.state.page + 1
     })
-    this.props.fetchUsers('stackoverflow', this.state.page)
+    this.props.fetchUsers(this.props.food[this.props.food.length-1]||this.state.filtered, this.state.page)
   }
    
   
@@ -57,7 +56,17 @@ class App extends React.Component {
     }, 2000)
     
     return this.props.list.loading ? (
-            <h2>Loading</h2>
+      <div className="App">
+      <Loader
+      className="Spinner"
+      type="TailSpin"
+      color="#00BFFF"
+      height={100}
+      width={100}
+      timeout={2000}
+    
+
+   /></div>
           ) : this.props.list.error ? (
             <h2>{this.props.list.error}</h2>
           ) : (
